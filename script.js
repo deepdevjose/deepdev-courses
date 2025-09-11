@@ -1,0 +1,249 @@
+// Add glassmorphism interactive features
+document.addEventListener('DOMContentLoaded', function() {
+    
+    // Typing effect for the main title
+    function smoothTypeWriter() {
+        const titleElement = document.querySelector('.main-title');
+        if (!titleElement) return;
+        
+        // Start typing effect after initial fade-in
+        setTimeout(() => {
+            // Store the original HTML content
+            const originalHTML = titleElement.innerHTML;
+            
+            // Create the text parts
+            const part1 = "I'm cool,";
+            const part2 = "but I want to: ";
+            const part3 = "be better";
+            
+            // Clear content and setup
+            titleElement.innerHTML = '';
+            titleElement.style.opacity = '1';
+            titleElement.classList.add('typing-cursor');
+            
+            let currentText = '';
+            let phase = 1;
+            let i = 0;
+            
+            const typing = setInterval(() => {
+                if (phase === 1) {
+                    // Type first part
+                    if (i < part1.length) {
+                        currentText += part1.charAt(i);
+                        titleElement.innerHTML = currentText;
+                        i++;
+                    } else {
+                        // Add line break and move to next phase
+                        currentText += '<br>';
+                        titleElement.innerHTML = currentText;
+                        phase = 2;
+                        i = 0;
+                        // Small pause after line break
+                        setTimeout(() => {}, 200);
+                    }
+                } else if (phase === 2) {
+                    // Type second part
+                    if (i < part2.length) {
+                        currentText += part2.charAt(i);
+                        titleElement.innerHTML = currentText;
+                        i++;
+                    } else {
+                        phase = 3;
+                        i = 0;
+                    }
+                } else if (phase === 3) {
+                    // Type third part with highlight
+                    if (i < part3.length) {
+                        const highlightedPart = '<span class="highlight">' + part3.substring(0, i + 1) + '</span>';
+                        titleElement.innerHTML = currentText + highlightedPart;
+                        i++;
+                    } else {
+                        clearInterval(typing);
+                        // Remove cursor class and restore final content
+                        setTimeout(() => {
+                            titleElement.classList.remove('typing-cursor');
+                            titleElement.innerHTML = originalHTML;
+                        }, 1000);
+                    }
+                }
+            }, 100);
+        }, 1500);
+    }
+    
+    // Typing effect for description
+    function typeDescription() {
+        const descElement = document.querySelector('.description');
+        if (!descElement) return;
+        
+        setTimeout(() => {
+            const fullText = descElement.textContent;
+            descElement.textContent = '';
+            descElement.style.opacity = '1';
+            descElement.style.borderRight = '1px solid #888';
+            
+            let i = 0;
+            const typing = setInterval(() => {
+                if (i < fullText.length) {
+                    descElement.textContent += fullText.charAt(i);
+                    i++;
+                } else {
+                    clearInterval(typing);
+                    setTimeout(() => {
+                        descElement.style.borderRight = 'none';
+                    }, 500);
+                }
+            }, 40);
+        }, 4000); // Start after title is done
+    }
+    
+    // Enhanced scroll animations
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+    
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+                entry.target.classList.add('animate-in');
+            }
+        });
+    }, observerOptions);
+    
+    // Enhanced share button functionality
+    const shareBtn = document.querySelector('.share-btn');
+    if (shareBtn) {
+        shareBtn.addEventListener('click', function(e) {
+            // Create glassmorphism ripple effect
+            const ripple = document.createElement('span');
+            const rect = this.getBoundingClientRect();
+            const size = Math.max(rect.width, rect.height);
+            const x = e.clientX - rect.left - size / 2;
+            const y = e.clientY - rect.top - size / 2;
+            
+            ripple.style.width = ripple.style.height = size + 'px';
+            ripple.style.left = x + 'px';
+            ripple.style.top = y + 'px';
+            ripple.classList.add('ripple');
+            
+            this.appendChild(ripple);
+            
+            setTimeout(() => {
+                ripple.remove();
+            }, 600);
+            
+            // Share functionality
+            if (navigator.share) {
+                navigator.share({
+                    title: 'DeepDev - I\'m cool, but I want to be better',
+                    text: 'Check out this cool glassmorphism website!',
+                    url: window.location.href
+                });
+            } else {
+                navigator.clipboard.writeText(window.location.href).then(() => {
+                    const originalText = this.textContent;
+                    this.textContent = 'Copied!';
+                    this.style.background = '#ffffff';
+                    this.style.color = '#0a0a0a';
+                    setTimeout(() => {
+                        this.textContent = originalText;
+                        this.style.background = '';
+                        this.style.color = '';
+                    }, 2000);
+                });
+            }
+        });
+    }
+    
+    // Footer links enhanced interactions
+    const footerLinks = document.querySelectorAll('.footer-links span');
+    footerLinks.forEach(link => {
+        link.addEventListener('click', function() {
+            // Smooth click animation
+            this.style.transform = 'scale(0.95) translateY(-2px)';
+            this.style.color = '#00ff88';
+            setTimeout(() => {
+                this.style.transform = 'scale(1) translateY(-2px)';
+            }, 150);
+        });
+        
+        // Add hover glow effect
+        link.addEventListener('mouseenter', function() {
+            this.style.textShadow = '0 0 10px #00ff88';
+            this.style.color = '#00ff88';
+        });
+        
+        link.addEventListener('mouseleave', function() {
+            this.style.textShadow = 'none';
+            this.style.color = '#888';
+        });
+    });
+    
+    // Initialize typing effects
+    smoothTypeWriter();
+    typeDescription();
+    
+    // Add CSS for glassmorphism effects
+    const style = document.createElement('style');
+    style.textContent = `
+        .ripple {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.4);
+            transform: scale(0);
+            animation: ripple-animation 0.6s linear;
+            pointer-events: none;
+        }
+        
+        @keyframes ripple-animation {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+        
+        .animate-in {
+            animation: glassBounceIn 0.8s ease-out;
+        }
+        
+        @keyframes glassBounceIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.8) translateY(30px);
+            }
+            60% {
+                opacity: 1;
+                transform: scale(1.02) translateY(-5px);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) translateY(0px);
+            }
+        }
+        
+        /* Enhanced hover effects */
+        .main-title:hover {
+            text-shadow: 0 0 25px rgba(255, 255, 255, 0.6);
+            transition: text-shadow 0.3s ease;
+        }
+        
+        .highlight:hover {
+            filter: brightness(1.2);
+            transition: filter 0.3s ease;
+        }
+        
+        /* Subtle parallax for glass elements */
+        .header:hover {
+            backdrop-filter: blur(25px);
+            transition: backdrop-filter 0.3s ease;
+        }
+        
+        .footer:hover {
+            backdrop-filter: blur(25px);
+            transition: backdrop-filter 0.3s ease;
+        }
+    `;
+    document.head.appendChild(style);
+});
