@@ -134,19 +134,27 @@ document.addEventListener('DOMContentLoaded', function() {
                 ripple.remove();
             }, 600);
             
+            // Custom URL to share
+            const shareURL = 'https://deepdevjose.github.io/deepdev-courses/';
+            
             // Share functionality
             if (navigator.share) {
                 navigator.share({
-                    title: 'DeepDev - I\'m cool, but I want to be better',
-                    text: 'Check out this cool glassmorphism website!',
-                    url: window.location.href
+                    title: 'DeepDev Courses',
+                    text: 'Check out my programming courses!',
+                    url: shareURL
                 });
             } else {
-                navigator.clipboard.writeText(window.location.href).then(() => {
+                // Copy URL and show QR
+                navigator.clipboard.writeText(shareURL).then(() => {
                     const originalText = this.textContent;
                     this.textContent = 'Copied!';
                     this.style.background = '#ffffff';
                     this.style.color = '#0a0a0a';
+                    
+                    // Show QR modal
+                    showQRModal(shareURL);
+                    
                     setTimeout(() => {
                         this.textContent = originalText;
                         this.style.background = '';
@@ -155,6 +163,68 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
             }
         });
+    }
+    
+    // Function to show QR modal
+    function showQRModal(url) {
+        // Create modal
+        const modal = document.createElement('div');
+        modal.classList.add('qr-modal');
+        
+        // Create modal content
+        const modalContent = document.createElement('div');
+        modalContent.classList.add('qr-modal-content');
+        
+        // Create QR code container
+        const qrContainer = document.createElement('div');
+        qrContainer.classList.add('qr-container');
+        
+        // Create QR code using API
+        const qrImg = document.createElement('img');
+        qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(url)}`;
+        qrImg.alt = 'QR Code';
+        qrImg.classList.add('qr-image');
+        
+        // Create text elements
+        const title = document.createElement('h3');
+        title.textContent = 'Scan QR Code';
+        title.classList.add('qr-title');
+        
+        const subtitle = document.createElement('p');
+        subtitle.textContent = 'URL copied to clipboard!';
+        subtitle.classList.add('qr-subtitle');
+        
+        const urlText = document.createElement('p');
+        urlText.textContent = url;
+        urlText.classList.add('qr-url');
+        
+        // Create close button
+        const closeBtn = document.createElement('button');
+        closeBtn.textContent = '✕';
+        closeBtn.classList.add('qr-close');
+        closeBtn.onclick = () => modal.remove();
+        
+        // Assemble modal
+        qrContainer.appendChild(qrImg);
+        modalContent.appendChild(closeBtn);
+        modalContent.appendChild(title);
+        modalContent.appendChild(qrContainer);
+        modalContent.appendChild(subtitle);
+        modalContent.appendChild(urlText);
+        modal.appendChild(modalContent);
+        
+        // Add to body
+        document.body.appendChild(modal);
+        
+        // Close on background click
+        modal.onclick = (e) => {
+            if (e.target === modal) modal.remove();
+        };
+        
+        // Auto close after 8 seconds
+        setTimeout(() => {
+            if (modal.parentNode) modal.remove();
+        }, 8000);
     }
     
     // Footer links enhanced interactions
