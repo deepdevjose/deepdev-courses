@@ -245,19 +245,15 @@ body {
 
 .footer-content {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     max-width: 1200px;
     margin: 0 auto;
-    gap: 1.5rem;
 }
 
 .footer-links {
     display: flex;
     gap: 2rem;
-    justify-content: center;
-    text-align: center;
 }
 
 .footer-links span {
@@ -420,14 +416,12 @@ body {
     }
     
     .footer-content {
-        flex-direction: column;
-        gap: 1.5rem;
-        text-align: center;
+        justify-content: space-between;
+        text-align: left;
     }
     
     .footer-links {
         gap: 1.5rem;
-        justify-content: center;
     }
     
     .footer-link {
@@ -478,11 +472,11 @@ body {
     }
     
     .footer-content {
-        gap: 1.2rem;
+        justify-content: space-between;
+        text-align: left;
     }
     
     .footer-links {
-        flex-direction: column;
         gap: 1rem;
     }
     
@@ -536,8 +530,15 @@ body {
         padding: 20px 15px;
     }
     
+    .footer-content {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+    }
+    
     .footer-links {
         gap: 0.8rem;
+        justify-content: center;
     }
     
     .footer-link {
