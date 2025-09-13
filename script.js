@@ -233,7 +233,7 @@ document.addEventListener('DOMContentLoaded', function() {
         link.addEventListener('click', function() {
             // Smooth click animation
             this.style.transform = 'scale(0.95) translateY(-2px)';
-            this.style.color = '#00ff88';
+            this.style.color = '#3b82f6';
             setTimeout(() => {
                 this.style.transform = 'scale(1) translateY(-2px)';
             }, 150);
@@ -241,8 +241,8 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Add hover glow effect
         link.addEventListener('mouseenter', function() {
-            this.style.textShadow = '0 0 10px #00ff88';
-            this.style.color = '#00ff88';
+            this.style.textShadow = '0 0 10px #3b82f6';
+            this.style.color = '#3b82f6';
         });
         
         link.addEventListener('mouseleave', function() {
@@ -306,13 +306,15 @@ document.addEventListener('DOMContentLoaded', function() {
         
         /* Subtle parallax for glass elements */
         .header:hover {
+            -webkit-backdrop-filter: blur(25px);
             backdrop-filter: blur(25px);
-            transition: backdrop-filter 0.3s ease;
+            transition: -webkit-backdrop-filter 0.3s ease, backdrop-filter 0.3s ease;
         }
         
         .footer:hover {
+            -webkit-backdrop-filter: blur(25px);
             backdrop-filter: blur(25px);
-            transition: backdrop-filter 0.3s ease;
+            transition: -webkit-backdrop-filter 0.3s ease, backdrop-filter 0.3s ease;
         }
     `;
     document.head.appendChild(style);
