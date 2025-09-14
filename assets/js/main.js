@@ -406,6 +406,8 @@ document.addEventListener('DOMContentLoaded', function() {
     initCoursesNavigation();
 });
 
+// Auth Modal Logic Eliminated
+
 function initCoursesNavigation() {
     const courseCards = document.querySelectorAll('.course-card');
     const courseButtons = document.querySelectorAll('.course-btn');

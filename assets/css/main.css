@@ -266,7 +266,7 @@ body::before {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px 40px;
+    padding: 10px 28px;
     position: fixed;
     top: 0;
     left: 0;
@@ -360,6 +360,57 @@ body::before {
 .share-btn:focus {
     outline: 2px solid rgba(59, 130, 246, 0.5);
     outline-offset: 2px;
+}
+
+/* User Button Styles */
+.user-btn {
+    margin-left: 1.5rem;
+    padding: 0.5rem 0.9rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, rgba(59,130,246,0.18) 0%, rgba(59,130,246,0.09) 100%);
+    color: #fff;
+    border: 1px solid rgba(59,130,246,0.3);
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(59,130,246,0.08);
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
+    text-decoration: none;
+}
+.user-btn:hover {
+    background: linear-gradient(135deg, rgba(59,130,246,0.28) 0%, rgba(59,130,246,0.18) 100%);
+    border-color: rgba(59,130,246,0.5);
+    color: #60a5fa;
+}
+.user-icon {
+    width: 22px;
+    height: 22px;
+    stroke: #fff;
+    transition: stroke 0.2s;
+}
+.user-btn:hover .user-icon {
+    stroke: #60a5fa;
+}
+
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+}
+
+.user-square-btn {
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+}
+.user-square-btn .user-icon {
+    width: 22px;
+    height: 22px;
 }
 
 /* Courses Navigation Styles */
@@ -529,7 +580,7 @@ body::before {
     font-family: 'Space Grotesk', sans-serif;
     text-shadow: 
         0 2px 4px rgba(0, 0, 0, 0.6),
-        0 0 20px rgba(255, 255, 255, 0.1);
+        0 0 20px rgba(0, 0, 0, 0.1);
     line-height: 1.2;
 }
 
@@ -951,6 +1002,158 @@ body::before {
     100% {
         opacity: 1;
         transform: scale(1);
+    }
+}
+
+/* Auth Modal Styles */
+.auth-btn {
+    background: linear-gradient(135deg, rgba(59,130,246,0.18) 0%, rgba(59,130,246,0.09) 100%);
+    color: #fff;
+    border: 1px solid rgba(59,130,246,0.3);
+    border-radius: 12px;
+    padding: 0.5rem 1.2rem;
+    font-size: 1rem;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 500;
+    margin-left: 1rem;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
+    box-shadow: 0 2px 8px rgba(59,130,246,0.08);
+}
+.auth-btn:hover {
+    background: linear-gradient(135deg, rgba(59,130,246,0.28) 0%, rgba(59,130,246,0.18) 100%);
+    border-color: rgba(59,130,246,0.5);
+}
+
+.auth-modal {
+    position: fixed;
+    top: 0; left: 0; width: 100vw; height: 100vh;
+    background: rgba(0,0,0,0.85);
+    -webkit-backdrop-filter: blur(18px);
+    backdrop-filter: blur(18px);
+    z-index: 99999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: modalFadeIn 0.4s cubic-bezier(0.4,0,0.2,1);
+}
+.auth-modal-content {
+    background: linear-gradient(145deg, rgba(30,30,30,0.98) 0%, rgba(20,20,20,0.95) 100%);
+    border-radius: 24px;
+    padding: 2.5rem 2rem 2rem;
+    min-width: 320px;
+    max-width: 370px;
+    width: 100%;
+    position: relative;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 10px 30px rgba(0,0,0,0.4);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.auth-close {
+    position: absolute;
+    top: 18px; right: 22px;
+    background: rgba(255,255,255,0.08);
+    border: none;
+    color: #fff;
+    font-size: 1.3rem;
+    border-radius: 10px;
+    width: 36px; height: 36px;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex; align-items: center; justify-content: center;
+}
+.auth-close:hover {
+    background: rgba(255,255,255,0.18);
+    color: #3b82f6;
+}
+.auth-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    font-family: 'Space Grotesk', sans-serif;
+}
+.auth-field {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1.2rem;
+    width: 100%;
+}
+.auth-field label {
+    font-size: 1rem;
+    color: #93c5fd;
+    margin-bottom: 0.3rem;
+    font-weight: 500;
+}
+.auth-field input {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(59,130,246,0.18);
+    border-radius: 10px;
+    padding: 0.7rem 1rem;
+    font-size: 1rem;
+    color: #fff;
+    font-family: 'Fira Code', monospace;
+    outline: none;
+    transition: border-color 0.2s;
+}
+.auth-field input:focus {
+    border-color: #3b82f6;
+}
+.auth-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 1.2rem;
+}
+.auth-action-btn {
+    background: linear-gradient(135deg, rgba(59,130,246,0.25) 0%, rgba(59,130,246,0.15) 100%);
+    border: 1px solid rgba(59,130,246,0.4);
+    color: #fff;
+    padding: 0.7rem 1.5rem;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: 'Space Grotesk', sans-serif;
+    transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
+    box-shadow: 0 4px 16px rgba(59,130,246,0.15);
+}
+.auth-action-btn:hover {
+    background: linear-gradient(135deg, rgba(59,130,246,0.35) 0%, rgba(59,130,246,0.25) 100%);
+    border-color: rgba(59,130,246,0.6);
+}
+.auth-switch {
+    background: none;
+    border: none;
+    color: #60a5fa;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    text-decoration: underline;
+    font-family: 'Space Grotesk', sans-serif;
+    transition: color 0.2s;
+}
+.auth-switch:hover {
+    color: #3b82f6;
+}
+@media (max-width: 480px) {
+    .auth-modal-content {
+        padding: 2rem 1rem 1.5rem;
+        min-width: 90vw;
+        max-width: 98vw;
+    }
+    .auth-title {
+        font-size: 1.2rem;
+    }
+    .auth-field input {
+        font-size: 0.95rem;
+        padding: 0.6rem 0.8rem;
+    }
+    .auth-action-btn {
+        font-size: 0.95rem;
+        padding: 0.6rem 1.2rem;
     }
 }
 
@@ -2005,7 +2208,7 @@ html {
     height: 100%;
     background: rgba(0, 0, 0, 0.8);
     -webkit-backdrop-filter: blur(20px);
-    backdrop-filter: blur(20px);
+       backdrop-filter: blur(20px);
     z-index: 10000;
     display: flex;
     align-items: center;
